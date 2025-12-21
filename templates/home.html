@@ -16,9 +16,11 @@
 
 </head>
 <body>
+
+    {% include 'nav.html' %}
     <div class="container">
         <h1 class="text-center mt-2 mb-4">{{company_name}} Careers</h1>
-        <img id="banner" class="img-fluid" src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Banner" >
+        <img id="banner" class="img-fluid" src="{{ url_for('static', filename='/banner.jpg') }}" alt="Banner" >
         <h2 class="text-center">About Us</h2>
         <p class="lead">
 
