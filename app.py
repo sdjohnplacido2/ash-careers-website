@@ -40,7 +40,6 @@ def load_jobs_from_db():
         return jobs
 
 
-
 @app.route("/")
 def hello_world():
     joblist = load_jobs_from_db()
