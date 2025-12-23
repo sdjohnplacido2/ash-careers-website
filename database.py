@@ -1,3 +1,17 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+import os
 
-engine = create_engine("mysql+pymysql://sql12812626:Ln2CjA8SjU@sql12.freesqldatabase.com/sql12812626?charset=utf8mb4")
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+engine = create_engine(DATABASE_URL)
+
+def load_jobs_from_db():
+    with engine.connect() as conn:
+        result = conn.execute(text("select * from jobs"))
+        jobs = []
+        for row in result.all():
+            jobs.append(dict(row._mapping))
+        return jobs

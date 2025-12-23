@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify
-from database import engine
-from sqlalchemy import text
+from database import load_jobs_from_db
+
 app = Flask(__name__)
 
 JOBS = [
@@ -31,15 +31,6 @@ JOBS = [
 ]
 
 
-def load_jobs_from_db():
-    with engine.connect() as conn:
-        result = conn.execute(text("select * from jobs"))
-        jobs = []
-        for row in result.all():
-            jobs.append(dict(row._mapping))
-        return jobs
-
-
 @app.route("/")
 def hello_world():
     joblist = load_jobs_from_db()
@@ -49,7 +40,7 @@ def hello_world():
 
 @app.route("/api/jobs")
 def list_jobs():
-    return jsonify(JOBS)
+    return jsonify(joblist=load_jobs_from_db())
 
 if __name__ == "__main__":
     app.run(debug=True)
